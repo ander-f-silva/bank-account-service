@@ -24,3 +24,13 @@ Nota importate para esta solução é que pretendo implementa esta solução par
 Para finalizar a outra alternativa para estes problemas que visa mais implementação e que poderia ser ideal entre "aspas" e vou ilustrar a idéias aqui. Esta solução não será implementa por questões de tempo.
 
 ## Solução "ideal" para a Arquitetura inicial
+
+Para a solução final eu pensei um pouco mais sobre disponibilidade e não dependende somente da base tradicional para armazenar os dados, neste caso incluir um "tópico" que distribui uma mensagem para duas filas, uma que guarda os dados na base e outra que armazena no S3 (há uma solução que podermos trabalhar com um circute brack também para este cenário de disponibilidade) para casos de escrita, para leitura a aplicação poderá um mecanismo com Hydrix para olhar a base e quando estiver indisponivel olhar o s3 para leitura.
+
+Nota importate para esta solução não será implementa, mas fica uma idéia do que pode ser melhorado e logicamente é somente uma sugestão por que em equipe idéias melhores podem surgir.
+
+![Arq3](https://github.com/ander-f-silva/account-service/blob/main/document/image/final_architecture.png)
+
+Minha consideração final é que temos muitas soluções para atender, diversos tipos de problemas, fala apena monitorar a aplicação e ver os pontos de falhas e aplicação solução de forma mais aquinóstica possível e deixar a aplicação menos acoplada possível com o recursos que tenho com a solução onde será executada (devida as proporções).
+
+Vejo que quando mais elementos temos podemos criar outros pontos que pode complicar a solução, o importante é visar sempre a melhor solução para o cliente.
