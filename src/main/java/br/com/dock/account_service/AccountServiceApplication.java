@@ -1,4 +1,4 @@
-package br.com.dock.accountservice;
+package br.com.dock.account_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

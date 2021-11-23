@@ -1,4 +1,4 @@
-package br.com.dock.accountservice;
+package br.com.dock.account_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
