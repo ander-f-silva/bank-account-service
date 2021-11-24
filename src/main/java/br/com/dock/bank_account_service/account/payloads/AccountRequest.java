@@ -25,6 +25,10 @@ public class AccountRequest {
     @NotNull
     private AccountType accountType;
 
+    public enum AccountType {
+        CHECKING_ACCOUNT
+    }
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Data
@@ -37,10 +41,6 @@ public class AccountRequest {
 
         @NotNull
         private LocalDate dateBirthday;
-    }
-
-    public enum AccountType {
-        CHECKING_ACCOUNT
     }
 
 }
