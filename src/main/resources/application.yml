@@ -1,3 +1,5 @@
 spring:
   main:
     lazy-initialization: true
+  jackson:
+    date-format: "yyyy-MM-dd"
