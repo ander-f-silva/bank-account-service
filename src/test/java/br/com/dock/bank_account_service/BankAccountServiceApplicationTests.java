@@ -1,10 +1,10 @@
-package br.com.dock.account_service;
+package br.com.dock.bank_account_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AccountServiceApplicationTests {
+class BankAccountServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
