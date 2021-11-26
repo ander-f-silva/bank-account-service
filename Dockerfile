@@ -1,7 +1,9 @@
-FROM ghcr.io/graalvm/graalvm-ce:latest
+FROM openjdk:11-jre
 
-ENV APP_HOME "/opt/app"
+ARG JAR_FILE=target/*.jar
 
-ADD ./target/bank-account-service-0.0.1-SNAPSHOT.jar $APP_HOME/bank-account-service-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
 
-CMD	java -Xmx512M -Xms256M -jar /opt/app/bank-account-service-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-Xmx512M", "-Xms256M","-jar","/app.jar"]
+
+EXPOSE 8080 8080
