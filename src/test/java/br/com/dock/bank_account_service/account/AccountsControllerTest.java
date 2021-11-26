@@ -21,6 +21,7 @@ class AccountsControllerTest {
     public static final String PATH_ACCOUNTS_RESOURCE = "/accounts";
     public static final String VERSION_1 = "v1";
     public static final String PATH_BLOCKS = "/blocks";
+    public static final String PATH_TRANSACTIONS = "/transactions";
     public static final Long ACCOUNT_ID = 1L;
 
     @Autowired
@@ -56,7 +57,7 @@ class AccountsControllerTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.cases.FindAccountStatement#parametersFindAccountStatement")
     void testShouldFindTheAccountStatement(String title, FindAccountStatement.UserCase userCase) {
-        client.get().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID)
+        client.get().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_TRANSACTIONS)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)
                 .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
