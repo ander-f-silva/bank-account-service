@@ -1,5 +1,6 @@
 package br.com.dock.bank_account_service.account;
 
+import br.com.dock.bank_account_service.account.cases.BlockAccount;
 import br.com.dock.bank_account_service.account.cases.CreateNewAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +19,7 @@ class AccountsControllerTest {
 
     public static final String PATH_ACCOUNTS_RESOURCE = "/accounts";
     public static final String VERSION_1 = "v1";
+    public static final String PATH_BLOCKS = "/blocks";
 
     @Autowired
     WebTestClient client;
@@ -34,5 +36,19 @@ class AccountsControllerTest {
                 .expectStatus().isEqualTo(userCase.getHttpStatus())
                 .expectBody()
                 .json(userCase.getResponse());
+    }
+
+    @DisplayName("Should block an account")
+    @ParameterizedTest(name = "{index} {0}")
+    @MethodSource("br.com.dock.bank_account_service.account.cases.BlockAccount#parametersBlockAccount")
+    void testShouldBlockAccount(String title, BlockAccount.UserCase userCase) {
+        var accountId = 1;
+
+        client.patch().uri(PATH_ACCOUNTS_RESOURCE + "/" + accountId + PATH_BLOCKS)
+                .header(HEAD_ACCEPT_VERSION, VERSION_1)
+                .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(userCase.getRequest())
+                .exchange()
+                .expectStatus().isEqualTo(userCase.getHttpStatus());
     }
 }
