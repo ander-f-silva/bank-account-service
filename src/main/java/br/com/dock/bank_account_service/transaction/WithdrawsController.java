@@ -13,7 +13,7 @@ class WithdrawsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Mono<Void> apply(@RequestBody @Valid WithDrawRequest request) {
+    Mono<Void> apply(@RequestParam Long accountId, @RequestBody @Valid WithDrawRequest request) {
         return Mono.empty();
     }
 }

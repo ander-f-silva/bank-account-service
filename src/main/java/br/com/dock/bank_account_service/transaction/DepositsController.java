@@ -13,7 +13,7 @@ class DepositsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Mono<Void> apply(@RequestBody @Valid DepositRequest request) {
+    Mono<Void> apply(@RequestParam Long accountId, @RequestBody @Valid DepositRequest request) {
         return Mono.empty();
     }
 

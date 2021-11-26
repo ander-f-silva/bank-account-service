@@ -17,6 +17,7 @@ class DepositsControllerTest {
     public static final String HEAD_CONTENT_TYPE = "Content-type";
 
     public static final String PATH_DEPOSITS_RESOURCE = "/deposits";
+    public static final String FIRST_QUERY_STRING_ACCOUNT_ID = "?accountId=1";
     public static final String VERSION_1 = "v1";
 
     @Autowired
@@ -26,7 +27,7 @@ class DepositsControllerTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.transaction.cases.ApplyDeposit#parametersApplyDeposit")
     void testShouldCreateAnNewAccount(String title, ApplyDeposit.UserCase userCase) {
-        client.post().uri(PATH_DEPOSITS_RESOURCE)
+        client.post().uri(PATH_DEPOSITS_RESOURCE + FIRST_QUERY_STRING_ACCOUNT_ID)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)
                 .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .bodyValue(userCase.getRequest())
