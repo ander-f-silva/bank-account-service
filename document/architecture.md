@@ -6,7 +6,7 @@ Primeiramente, a minha idéa foi pensar em uma arquitetura simples, visando some
 
 Nota importante para esta solução é que não será a implementação para o teste e sim uma idéia para melhoras futuras.
 
-![Arq1](https://github.com/ander-f-silva/account-service/blob/main/document/image/start_architecture.png)
+![Arq1](https://github.com/ander-f-silva/bank-account-service/blob/main/document/image/start_architecture.png)
 
 Para finalizar, geralmente com esta visão inicial podemos ver que a aplicação tem um ponto de falha que a comunição somente uma inbstancia de banco de dados e caso o banco estaja fora do ar a aplicação não funcionará, outro ponto, dependendo do hardware que esta aplicação esta, podemos ter problemas de limitação de recurso como memória, disco e rede, neste caso vamos pensar um pouco melhor em uma solução de réplica (Lembrando que estou focando a aplicação rodará em um container, mas ela será aguinóstica ao ambimente local ou a infra). 
 
@@ -19,7 +19,7 @@ Neste momento comecei a pensar em trabalhar com distribuir a carga da aplicaçã
 
 Nota importate para esta solução é que pretendo implementa esta solução para rodar locamente usando docker com docker-compose, para ambiente e cloud se possível vou usar a AWS.
 
-![Arq2](https://github.com/ander-f-silva/account-service/blob/main/document/image/second_architecture.png)
+![Arq2](https://github.com/ander-f-silva/bank-account-service/blob/main/document/image/second_architecture.png)
 
 Para finalizar a outra alternativa para estes problemas que visa mais implementação e que poderia ser ideal entre "aspas" e vou ilustrar a idéias aqui. Esta solução não será implementa por questões de tempo.
 
@@ -29,7 +29,7 @@ Para a solução final eu pensei um pouco mais sobre disponibilidade e não depe
 
 Nota importate para esta solução não será implementa, mas fica uma idéia do que pode ser melhorado e logicamente é somente uma sugestão por que em equipe idéias melhores podem surgir.
 
-![Arq3](https://github.com/ander-f-silva/account-service/blob/main/document/image/final_architecture.png)
+![Arq3](https://github.com/ander-f-silva/bank-account-service/blob/main/document/image/final_architecture.png)
 
 Minha consideração final é que temos muitas soluções para atender, diversos tipos de problemas, fala apena monitorar a aplicação e ver os pontos de falhas e aplicação solução de forma mais aquinóstica possível e deixar a aplicação menos acoplada possível com o recursos que tenho com a solução onde será executada (devida as proporções).
 
