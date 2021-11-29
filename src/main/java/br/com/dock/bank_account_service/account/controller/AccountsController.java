@@ -5,21 +5,40 @@ import br.com.dock.bank_account_service.account.controller.dto.AccountRequest;
 import br.com.dock.bank_account_service.account.controller.dto.AccountResponse;
 import br.com.dock.bank_account_service.account.controller.dto.AccountStatementResponse;
 import br.com.dock.bank_account_service.account.controller.dto.BlockAccountRequest;
+import br.com.dock.bank_account_service.account.repository.AccountRepository;
+import br.com.dock.bank_account_service.person.repository.PersonEntity;
+import br.com.dock.bank_account_service.person.repository.PersonRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Arrays;
 
 @RestController
 @RequestMapping("/accounts")
+@AllArgsConstructor
 class AccountsController {
+    private final AccountRepository accountRepository;
+
+    private final PersonRepository personRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     Mono<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
+
+        var person = PersonEntity.builder()
+                .name(request.getPerson().getName())
+                .documentation(request.getPerson().getDocument())
+                .birthday(request.getPerson().getDateBirthday())
+                .build();
+
+      var monoPerson = personRepository.save(person);
+
+      var personSaved = monoPerson.block(Duration.ofMillis(3000));
 
         var response = AccountResponse
                 .builder()
