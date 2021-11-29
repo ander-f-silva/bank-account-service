@@ -26,14 +26,14 @@ public class ApplyDeposit {
                         "Amount is negative - Bad Request",
                         new UserCase(
                                 "{\"amount\": -1000.00}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/deposits\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Amount is null - Bad Request",
                         new UserCase(
                                 "{\"amount\": null}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/deposits\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 )
 
