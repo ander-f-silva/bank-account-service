@@ -4,8 +4,7 @@ create table Transaction
     idAccount     int           not null,
     amount        decimal(9, 2) not null,
     createdAt     datetime
-) engine = innodb
-  default charset = utf8;
+);
 
 alter table Transaction
     add constraint fk_transaction_account

@@ -6,9 +6,8 @@ create table Account
     dayLimit   decimal(9, 2) not null,
     flagActive boolean       not null,
     createdAt  datetime      not null
-) engine = innodb
-  default charset = utf8;
+);
 
-alter table Transaction
+alter table Person
     add constraint fk_account_people
-        foreign key (idPerson) references Person (idPersonidPeple);
+        foreign key (idPerson) references Person (idPerson);
