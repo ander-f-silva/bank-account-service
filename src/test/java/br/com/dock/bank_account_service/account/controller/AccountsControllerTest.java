@@ -1,8 +1,8 @@
-package br.com.dock.bank_account_service.account;
+package br.com.dock.bank_account_service.account.controller;
 
-import br.com.dock.bank_account_service.account.cases.BlockAccount;
-import br.com.dock.bank_account_service.account.cases.CreateNewAccount;
-import br.com.dock.bank_account_service.account.cases.FindAccountStatement;
+import br.com.dock.bank_account_service.account.controller.cases.BlockAccount;
+import br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount;
+import br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

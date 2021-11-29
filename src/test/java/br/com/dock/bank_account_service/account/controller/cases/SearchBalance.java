@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.account.cases;
+package br.com.dock.bank_account_service.account.controller.cases;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,19 +7,19 @@ import org.springframework.http.HttpStatus;
 
 import java.util.stream.Stream;
 
-public class FindAccountStatement {
+public class SearchBalance {
 
-    public static Stream<Arguments> parametersFindAccountStatement() {
+    public static Stream<Arguments> parametersSearchBalance() {
         return Stream.of(
                 Arguments.of(
                         "Search performed successfully - OK",
-                        new FindAccountStatement.UserCase(
-                                "{\"transactions\":[{\"id\": 1,\"amount\": 100.00,\"event\":\"DEPOSIT\",\"createdDate\":\"2021-12-01\"},{\"id\": 2,\"amount\": 50.0,\"event\": \"WITHDRAW\",\"createdDate\": \"2021-12-01\"}]}",
+                        new UserCase(
+                                "{\"amount\": 1000.00}",
                                 HttpStatus.OK)
                 )
 
                 /*
-                    TODO: Fazer a validação para checar se o usuário existe
+                    TODO: Fazer a pesquisa de usuário não encontrado -> Lembrar que usuário tem que estar ativo
                  */
         );
     }

@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.account.payloads;
+package br.com.dock.bank_account_service.account.controller.dto;
 
 import lombok.*;
 

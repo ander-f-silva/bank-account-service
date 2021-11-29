@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.transaction.cases;
+package br.com.dock.bank_account_service.transaction.controller.cases;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 
-public class ApplyWithDraw {
+public class ApplyDeposit {
 
-    public static Stream<Arguments> parametersApplyWithDraw() {
+    public static Stream<Arguments> parametersApplyDeposit() {
         var today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         return Stream.of(
@@ -26,19 +26,20 @@ public class ApplyWithDraw {
                         "Amount is negative - Bad Request",
                         new UserCase(
                                 "{\"amount\": -1000.00}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/withdraws\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "{\"timestamp\":\"" + today + "\",\"path\":\"/deposits\",\"status\":400,\"error\":\"Bad Request\"}",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Amount is null - Bad Request",
                         new UserCase(
                                 "{\"amount\": null}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/withdraws\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "{\"timestamp\":\"" + today + "\",\"path\":\"/deposits\",\"status\":400,\"error\":\"Bad Request\"}",
                                 HttpStatus.BAD_REQUEST)
                 )
 
+
                 /*
-                    TODO: Fazer a validação para não deixar que usuário retire o dinheiro da conta da forma que fica negativa
+                    TODO: Fazer a validação para não deixar que usuário depositar acima do limite diario
                  */
         );
     }

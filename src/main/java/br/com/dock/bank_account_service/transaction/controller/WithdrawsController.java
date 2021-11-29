@@ -1,6 +1,7 @@
-package br.com.dock.bank_account_service.transaction;
+package br.com.dock.bank_account_service.transaction.controller;
 
-import br.com.dock.bank_account_service.transaction.payload.WithDrawRequest;
+import br.com.dock.bank_account_service.transaction.controller.dto.WithDrawRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

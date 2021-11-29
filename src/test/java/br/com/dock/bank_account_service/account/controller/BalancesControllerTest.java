@@ -1,6 +1,6 @@
-package br.com.dock.bank_account_service.account;
+package br.com.dock.bank_account_service.account.controller;
 
-import br.com.dock.bank_account_service.account.cases.SearchBalance;
+import br.com.dock.bank_account_service.account.controller.cases.SearchBalance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

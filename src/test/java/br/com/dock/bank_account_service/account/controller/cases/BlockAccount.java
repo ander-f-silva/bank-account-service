@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.account.cases;
+package br.com.dock.bank_account_service.account.controller.cases;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

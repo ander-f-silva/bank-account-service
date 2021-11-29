@@ -1,6 +1,6 @@
-package br.com.dock.bank_account_service.account;
+package br.com.dock.bank_account_service.account.controller;
 
-import br.com.dock.bank_account_service.account.payloads.AmountResponse;
+import br.com.dock.bank_account_service.account.controller.dto.AmountResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
