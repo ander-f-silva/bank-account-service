@@ -10,11 +10,10 @@ import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -28,7 +27,7 @@ class AccountsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    Mono<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
+    ResponseEntity<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
 
         var person = PersonEntity.builder()
                 .name(request.getPerson().getName())
@@ -36,9 +35,7 @@ class AccountsController {
                 .birthday(request.getPerson().getDateBirthday())
                 .build();
 
-      var monoPerson = personRepository.save(person);
-
-      var personSaved = monoPerson.block(Duration.ofMillis(3000));
+        var personSaved = personRepository.save(person);
 
         var response = AccountResponse
                 .builder()
@@ -50,18 +47,17 @@ class AccountsController {
                 .accountType(AccountResponse.AccountType.CHECKING_ACCOUNT)
                 .build();
 
-        return Mono.just(response);
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{accountId}/blocks")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    Mono<Void> block(@PathVariable Long accountId, @RequestBody @Valid BlockAccountRequest request) {
-        return Mono.empty();
+    ResponseEntity<Void> block(@PathVariable Long accountId, @RequestBody @Valid BlockAccountRequest request) {
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{accountId}/transactions")
-    Mono<AccountStatementResponse> searchAccountStatement(@PathVariable Long accountId) {
-        return Mono.just(
+    ResponseEntity<AccountStatementResponse> searchAccountStatement(@PathVariable Long accountId) {
+        return ResponseEntity.ok(
                 new AccountStatementResponse(
                         Arrays.asList(
                                 new AccountStatementResponse.Transaction(1L, 100.0, AccountStatementResponse.EventType.DEPOSIT, LocalDate.of(2021, 12, 1)),
