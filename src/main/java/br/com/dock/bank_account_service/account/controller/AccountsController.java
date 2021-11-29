@@ -6,7 +6,6 @@ import br.com.dock.bank_account_service.account.controller.dto.AccountResponse;
 import br.com.dock.bank_account_service.account.controller.dto.AccountStatementResponse;
 import br.com.dock.bank_account_service.account.controller.dto.BlockAccountRequest;
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
-import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,14 +27,13 @@ class AccountsController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
-
-        var person = PersonEntity.builder()
-                .name(request.getPerson().getName())
-                .documentation(request.getPerson().getDocument())
-                .birthday(request.getPerson().getDateBirthday())
-                .build();
-
-        var personSaved = personRepository.save(person);
+//        var person = PersonEntity.builder()
+//                .name(request.getPerson().getName())
+//                .documentation(request.getPerson().getDocument())
+//                .birthday(request.getPerson().getDateBirthday())
+//                .build();
+//
+//        var personSaved = personRepository.save(person);
 
         var response = AccountResponse
                 .builder()

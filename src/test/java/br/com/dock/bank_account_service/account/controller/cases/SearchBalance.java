@@ -14,7 +14,7 @@ public class SearchBalance {
                 Arguments.of(
                         "Search performed successfully - OK",
                         new UserCase(
-                                "{\"amount\": 1000.00}",
+                                "{\"amount\":1000.0}",
                                 HttpStatus.OK)
                 )
 

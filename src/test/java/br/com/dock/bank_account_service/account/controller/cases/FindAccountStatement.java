@@ -14,7 +14,7 @@ public class FindAccountStatement {
                 Arguments.of(
                         "Search performed successfully - OK",
                         new FindAccountStatement.UserCase(
-                                "{\"transactions\":[{\"id\": 1,\"amount\": 100.00,\"event\":\"DEPOSIT\",\"createdDate\":\"2021-12-01\"},{\"id\": 2,\"amount\": 50.0,\"event\": \"WITHDRAW\",\"createdDate\": \"2021-12-01\"}]}",
+                                "{\"transactions\":[{\"id\":1,\"amount\":100.0,\"event\":\"DEPOSIT\",\"createdDate\":\"2021-12-01\"},{\"id\":2,\"amount\":50.0,\"event\":\"WITHDRAW\",\"createdDate\":\"2021-12-01\"}]}",
                                 HttpStatus.OK)
                 )
 

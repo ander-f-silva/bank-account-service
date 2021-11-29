@@ -19,35 +19,35 @@ public class CreateNewAccount {
                         "Create with success - OK",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"person\": {\"id\": 1, \"name\": \"Antonio da Silva\", \"document\": \"840XXXXXX37\", \"dateBirthday\": \"1990-01-01\"},\"id\": 1, \"balance\": 0, \"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\", \"createdDate\": \"" + today + "\"}",
+                                "{\"id\":1,\"person\":{\"id\":1,\"name\":\"Antonio da Silva\",\"document\":\"840XXXXXX37\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"dayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdDate\":\"" + today + "\"}",
                                 HttpStatus.OK)
                 ),
                 Arguments.of(
                         "Person is null - Bad Request",
                         new UserCase(
                                 "{\"person\": null}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "CPF is invalid - Bad Request",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"111111111\", \"dateBirthday\": \"1990-01-01\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Date Birthday is invalid - Bad Request",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Day Limit is invalid - Bad Request",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": -10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
+                                "",
                                 HttpStatus.BAD_REQUEST)
                 )
 

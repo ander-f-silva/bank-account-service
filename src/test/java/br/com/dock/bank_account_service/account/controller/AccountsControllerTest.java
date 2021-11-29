@@ -11,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -27,49 +31,53 @@ class AccountsControllerTest {
     public static final String PATH_TRANSACTIONS = "/transactions";
     public static final Long ACCOUNT_ID = 1L;
 
-    private WebTestClient client;
+    private MockMvc mockMvc;
 
     @BeforeEach
-    public void setup(@Autowired WebApplicationContext wac) {
-        this.client = MockMvcWebTestClient.bindToApplicationContext(wac).build();
+    public void setUp(@Autowired WebApplicationContext webApplicationContext) {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @DisplayName("Should create an new account")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount#parametersCreateNewAccount")
-    void testShouldCreateAnNewAccount(String title, CreateNewAccount.UserCase userCase) {
-        client.post().uri(PATH_ACCOUNTS_RESOURCE)
-                .header(HEAD_ACCEPT_VERSION, VERSION_1)
-                .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(userCase.getRequest())
-                .exchange()
-                .expectStatus().isEqualTo(userCase.getHttpStatus())
-                .expectBody()
-                .json(userCase.getResponse());
+    void testShouldCreateAnNewAccount(String title, CreateNewAccount.UserCase userCase) throws Exception {
+        var mvcResult = this.mockMvc.perform(MockMvcRequestBuilders
+                        .post(PATH_ACCOUNTS_RESOURCE)
+                        .header(HEAD_ACCEPT_VERSION, VERSION_1)
+                        .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(userCase.getRequest()))
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
+        assertThat(mvcResult.getResponse().getContentAsString(), equalTo(userCase.getResponse()));
     }
 
     @DisplayName("Should block an account")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.BlockAccount#parametersBlockAccount")
-    void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) {
-        client.patch().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_BLOCKS)
-                .header(HEAD_ACCEPT_VERSION, VERSION_1)
-                .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(userCase.getRequest())
-                .exchange()
-                .expectStatus().isEqualTo(userCase.getHttpStatus());
+    void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) throws Exception {
+        var mvcResult = this.mockMvc.perform(MockMvcRequestBuilders
+                        .patch(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_BLOCKS)
+                        .header(HEAD_ACCEPT_VERSION, VERSION_1)
+                        .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(userCase.getRequest()))
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
     }
 
     @DisplayName("Should find the account statement")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement#parametersFindAccountStatement")
-    void testShouldFindTheAccountStatement(String title, FindAccountStatement.UserCase userCase) {
-        client.get().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_TRANSACTIONS)
-                .header(HEAD_ACCEPT_VERSION, VERSION_1)
-                .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .exchange()
-                .expectStatus().isEqualTo(userCase.getHttpStatus())
-                .expectBody()
-                .json(userCase.getResponse());
+    void testShouldFindTheAccountStatement(String title, FindAccountStatement.UserCase userCase) throws Exception {
+        var mvcResult = this.mockMvc.perform(MockMvcRequestBuilders
+                        .get(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_TRANSACTIONS)
+                        .header(HEAD_ACCEPT_VERSION, VERSION_1)
+                        .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
+        assertThat(mvcResult.getResponse().getContentAsString(), equalTo(userCase.getResponse()));
     }
 }
