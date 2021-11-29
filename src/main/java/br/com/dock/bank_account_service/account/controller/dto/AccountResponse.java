@@ -21,10 +21,6 @@ public class AccountResponse {
 
     private LocalDate createdDate;
 
-    public enum AccountType {
-        CHECKING_ACCOUNT
-    }
-
     @AllArgsConstructor
     @NoArgsConstructor
     @Data

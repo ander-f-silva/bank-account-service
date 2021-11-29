@@ -25,10 +25,6 @@ public class AccountRequest {
     @NotNull
     private AccountType accountType;
 
-    public enum AccountType {
-        CHECKING_ACCOUNT
-    }
-
     @AllArgsConstructor
     @NoArgsConstructor
     @Data

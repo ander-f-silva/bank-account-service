@@ -1,15 +1,15 @@
 package br.com.dock.bank_account_service.account.controller;
 
 
-import br.com.dock.bank_account_service.account.controller.dto.AccountRequest;
-import br.com.dock.bank_account_service.account.controller.dto.AccountResponse;
-import br.com.dock.bank_account_service.account.controller.dto.AccountStatementResponse;
-import br.com.dock.bank_account_service.account.controller.dto.BlockAccountRequest;
+import br.com.dock.bank_account_service.account.controller.dto.*;
+import br.com.dock.bank_account_service.account.repository.AccountEntity;
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
+import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,23 +26,37 @@ class AccountsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
+    @Transactional
     ResponseEntity<AccountResponse> create(@RequestBody @Valid AccountRequest request) {
-//        var person = PersonEntity.builder()
-//                .name(request.getPerson().getName())
-//                .documentation(request.getPerson().getDocument())
-//                .birthday(request.getPerson().getDateBirthday())
-//                .build();
-//
-//        var personSaved = personRepository.save(person);
+        var person = PersonEntity.builder()
+                .name(request.getPerson().getName())
+                .document(request.getPerson().getDocument())
+                .birthday(request.getPerson().getDateBirthday())
+                .build();
+
+        var personCreated = personRepository.save(person);
+
+        var account = AccountEntity.builder()
+                .idPerson(personCreated.getIdPerson())
+                .dayLimit(request.getDayLimit())
+                .flagActive(true)
+                .balance(0.0)
+                .createdAt(LocalDate.now())
+                .accountType(request.getAccountType().getValueNumber())
+                .build();
+
+        var accountCreated =  accountRepository.save(account);
+
+        //TODO: Fazer o código para mascarar o CPF -> Usar um View Helper
 
         var response = AccountResponse
                 .builder()
-                .id(1L)
-                .person(new AccountResponse.Person(1L, "Antonio da Silva", "840XXXXXX37", LocalDate.of(1990, 1, 1)))
-                .createdDate(LocalDate.now())
-                .balance(0.0)
-                .dayLimit(10000.00)
-                .accountType(AccountResponse.AccountType.CHECKING_ACCOUNT)
+                .id(account.getIdAccount())
+                .person(new AccountResponse.Person(person.getIdPerson(), person.getName(), person.getDocument(), person.getBirthday()))
+                .createdDate(accountCreated.getCreatedAt())
+                .balance(accountCreated.getBalance())
+                .dayLimit(accountCreated.getDayLimit())
+                .accountType(AccountType.CHECKING_ACCOUNT.getValue(accountCreated.getAccountType()))
                 .build();
 
         return ResponseEntity.ok(response);
