@@ -1,6 +1,7 @@
 package br.com.dock.bank_account_service.account.controller;
 
 import br.com.dock.bank_account_service.account.controller.cases.SearchBalance;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
+import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -20,12 +23,16 @@ class BalancesControllerTest {
     public static final String FIRST_QUERY_STRING_ACCOUNT_ID = "?accountId=1";
     public static final String VERSION_1 = "v1";
 
-    @Autowired
-    WebTestClient client;
+    private WebTestClient client;
+
+    @BeforeEach
+    public void setup(@Autowired WebApplicationContext wac) {
+        this.client = MockMvcWebTestClient.bindToApplicationContext(wac).build();
+    }
 
     @DisplayName("Should create an new account")
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("br.com.dock.bank_account_service.account.cases.SearchBalance#parametersSearchBalance")
+    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.SearchBalance#parametersSearchBalance")
     void testShouldCreateAnNewAccount(String title, SearchBalance.UserCase userCase) {
         client.get().uri(PATH_ACCOUNTS_RESOURCE + FIRST_QUERY_STRING_ACCOUNT_ID)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)

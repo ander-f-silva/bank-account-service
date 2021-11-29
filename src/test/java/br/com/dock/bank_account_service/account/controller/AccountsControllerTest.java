@@ -3,6 +3,7 @@ package br.com.dock.bank_account_service.account.controller;
 import br.com.dock.bank_account_service.account.controller.cases.BlockAccount;
 import br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount;
 import br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
+import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -24,12 +27,16 @@ class AccountsControllerTest {
     public static final String PATH_TRANSACTIONS = "/transactions";
     public static final Long ACCOUNT_ID = 1L;
 
-    @Autowired
-    WebTestClient client;
+    private WebTestClient client;
+
+    @BeforeEach
+    public void setup(@Autowired WebApplicationContext wac) {
+        this.client = MockMvcWebTestClient.bindToApplicationContext(wac).build();
+    }
 
     @DisplayName("Should create an new account")
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("br.com.dock.bank_account_service.account.cases.CreateNewAccount#parametersCreateNewAccount")
+    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount#parametersCreateNewAccount")
     void testShouldCreateAnNewAccount(String title, CreateNewAccount.UserCase userCase) {
         client.post().uri(PATH_ACCOUNTS_RESOURCE)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)
@@ -43,7 +50,7 @@ class AccountsControllerTest {
 
     @DisplayName("Should block an account")
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("br.com.dock.bank_account_service.account.cases.BlockAccount#parametersBlockAccount")
+    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.BlockAccount#parametersBlockAccount")
     void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) {
         client.patch().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_BLOCKS)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)
@@ -55,7 +62,7 @@ class AccountsControllerTest {
 
     @DisplayName("Should find the account statement")
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("br.com.dock.bank_account_service.account.cases.FindAccountStatement#parametersFindAccountStatement")
+    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement#parametersFindAccountStatement")
     void testShouldFindTheAccountStatement(String title, FindAccountStatement.UserCase userCase) {
         client.get().uri(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_TRANSACTIONS)
                 .header(HEAD_ACCEPT_VERSION, VERSION_1)
