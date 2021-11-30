@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/accounts")
@@ -63,7 +64,15 @@ class AccountsController {
     }
 
     @PatchMapping("/{accountId}/blocks")
+    @Transactional
     ResponseEntity<Void> block(@PathVariable Long accountId, @RequestBody @Valid BlockAccountRequest request) {
+        //TODO: Validate if account exist
+        if (!accountRepository.existsById(accountId)) {
+            throw new NoSuchElementException();
+        }
+
+        accountRepository.updateFlagActive(request.getValue(), accountId);
+
         return ResponseEntity.noContent().build();
     }
 

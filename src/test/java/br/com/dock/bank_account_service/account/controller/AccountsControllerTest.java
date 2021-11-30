@@ -3,6 +3,8 @@ package br.com.dock.bank_account_service.account.controller;
 import br.com.dock.bank_account_service.account.controller.cases.BlockAccount;
 import br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount;
 import br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement;
+import br.com.dock.bank_account_service.account.repository.AccountRepository;
+import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +34,12 @@ class AccountsControllerTest {
     public static final Long ACCOUNT_ID = 1L;
 
     private MockMvc mockMvc;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    PersonRepository personRepository;
 
     @BeforeEach
     public void setUp(@Autowired WebApplicationContext webApplicationContext) {
