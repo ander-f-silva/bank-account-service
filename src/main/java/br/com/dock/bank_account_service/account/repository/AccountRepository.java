@@ -8,5 +8,9 @@ import org.springframework.data.repository.query.Param;
 public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
     @Modifying
     @Query("update Account set flagActive = :flagActive WHERE idAccount = :idAccount")
-    boolean updateFlagActive(@Param("flagActive") Boolean flagActive, @Param("idAccount") Long idAccount);
+    boolean updateFlagActiveByAccountId(@Param("flagActive") Boolean flagActive, @Param("idAccount") Long idAccount);
+
+    @Modifying
+    @Query("update Account set balance = :balance WHERE idAccount = :idAccount")
+    boolean updateBalanceByAccountId(@Param("balance") Double balance, @Param("idAccount") Long idAccount);
 }

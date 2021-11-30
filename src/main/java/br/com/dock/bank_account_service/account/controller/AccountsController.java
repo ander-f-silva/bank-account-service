@@ -39,7 +39,7 @@ class AccountsController {
 
         var account = AccountEntity.builder()
                 .idPerson(personCreated.getIdPerson())
-                .dayLimit(request.getDayLimit())
+                .withdrawalDayLimit(request.getWithdrawalDayLimit())
                 .flagActive(true)
                 .balance(0.0)
                 .createdAt(LocalDate.now())
@@ -56,7 +56,7 @@ class AccountsController {
                 .person(new AccountResponse.Person(person.getIdPerson(), person.getName(), person.getDocument(), person.getBirthday()))
                 .createdDate(accountCreated.getCreatedAt())
                 .balance(accountCreated.getBalance())
-                .dayLimit(accountCreated.getDayLimit())
+                .withdrawalDayLimit(accountCreated.getWithdrawalDayLimit())
                 .accountType(AccountType.CHECKING_ACCOUNT.getValue(accountCreated.getAccountType()))
                 .build();
 
@@ -71,7 +71,7 @@ class AccountsController {
             throw new NoSuchElementException();
         }
 
-        accountRepository.updateFlagActive(request.getValue(), accountId);
+        accountRepository.updateFlagActiveByAccountId(request.getValue(), accountId);
 
         return ResponseEntity.noContent().build();
     }

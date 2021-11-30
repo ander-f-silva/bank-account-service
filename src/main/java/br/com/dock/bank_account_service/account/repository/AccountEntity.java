@@ -19,8 +19,8 @@ public class AccountEntity {
     private Long idPerson;
     @Column("balance")
     private Double balance;
-    @Column("dayLimit")
-    private Double dayLimit;
+    @Column("withdrawalDayLimit")
+    private Double withdrawalDayLimit;
     @Column("flagActive")
     private Boolean flagActive;
     @Column("accountType")

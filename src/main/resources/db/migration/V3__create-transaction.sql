@@ -1,6 +1,6 @@
 create table Transaction
 (
-    idTransaction int primary key,
+    idTransaction int primary key auto_increment,
     idAccount     int           not null,
     amount        decimal(9, 2) not null,
     createdAt     datetime

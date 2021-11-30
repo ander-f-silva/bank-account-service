@@ -15,7 +15,7 @@ public class AccountResponse {
 
     private Double balance;
 
-    private Double dayLimit;
+    private Double withdrawalDayLimit;
 
     private AccountType accountType;
 

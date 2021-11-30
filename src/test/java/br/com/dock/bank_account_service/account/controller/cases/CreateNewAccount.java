@@ -18,8 +18,8 @@ public class CreateNewAccount {
                 Arguments.of(
                         "Create with success - OK",
                         new UserCase(
-                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"id\":1,\"person\":{\"id\":1,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"dayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdDate\":\"" + today + "\"}",
+                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
+                                "{\"id\":1,\"person\":{\"id\":1,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"withdrawalDayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdDate\":\"" + today + "\"}",
                                 HttpStatus.OK)
                 ),
                 Arguments.of(
@@ -32,21 +32,21 @@ public class CreateNewAccount {
                 Arguments.of(
                         "CPF is invalid - Bad Request",
                         new UserCase(
-                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"111111111\", \"dateBirthday\": \"1990-01-01\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
+                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"111111111\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Date Birthday is invalid - Bad Request",
                         new UserCase(
-                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
+                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Day Limit is invalid - Bad Request",
                         new UserCase(
-                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": -10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
+                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"withdrawalDayLimit\": -10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
                 )

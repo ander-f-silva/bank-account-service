@@ -20,7 +20,7 @@ public class AccountRequest {
 
     @NotNull
     @Positive
-    private Double dayLimit;
+    private Double withdrawalDayLimit;
 
     @NotNull
     private AccountType accountType;

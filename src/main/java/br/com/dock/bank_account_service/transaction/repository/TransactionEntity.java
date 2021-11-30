@@ -1,21 +1,24 @@
 package br.com.dock.bank_account_service.transaction.repository;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
-@Table
+@Table("Transaction")
+@Builder
 public class TransactionEntity {
     @Id
+    @Column("idTransaction")
+    private Long idTransaction;
+    @Column("idAccount")
     private Long idAccount;
-    private Long idPerson;
-    private Double balance;
-    private Double dayLimit;
-    private Boolean flagActive;
+    @Column("amount")
+    private Double amount;
+    @Column("createdAt")
     private LocalDate createdAt;
 }
