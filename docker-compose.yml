@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.9'
 
 services:
   mysql:
@@ -15,15 +15,15 @@ services:
   application:
     image: dock/bank-account-service:latest
     build:
-      context: ./docker/application
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.application
     environment:
       - DB_USERNAME=bank-account
       - DB_PASSWORD=bank-account
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=bank-account-db
-    entrypoint: dockerize -wait tcp://mysql:3306 -wait java -jar /app.jar
+    entrypoint: dockerize -wait tcp://mysql:3306 java -jar /app.jar
     networks:
       - database-network
       - proxy-network
@@ -32,8 +32,8 @@ services:
   reverse-proxy:
     image: dock/web-proxy:latest
     build:
-      context: ./docker/reverse_proxy
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.proxy
     ports:
       - 8000:80
     entrypoint: dockerize -wait http://application:8080 /docker-entrypoint.sh nginx -g daemon
@@ -41,6 +41,7 @@ services:
       - application
     networks:
       - proxy-network
+
 networks:
   database-network:
     driver: bridge
