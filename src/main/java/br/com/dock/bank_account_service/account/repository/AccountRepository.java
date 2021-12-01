@@ -13,4 +13,9 @@ public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
     @Modifying
     @Query("update Account set balance = :balance WHERE idAccount = :idAccount")
     boolean updateBalanceByAccountId(@Param("balance") Double balance, @Param("idAccount") Long idAccount);
+
+    @Override
+    @Modifying
+    @Query("delete from Account")
+    void deleteAll();
 }
