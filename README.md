@@ -62,16 +62,73 @@ O projeto possui uma documentação de API atravez do Open API.
 
 Acesse http://localhost:8090/swagger-ui/index.html#/ para ver e testar os endpoints.
 
-![Open API](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/image/open_api.png)
+![Open API](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/image/swagger.png)
 
 ### Acess as api através do CURS
 
 #### Registrar a conta
+
+```shell
+curl --location --request POST 'http://localhost:8090/accounts' \
+--header 'Accept-Version: v1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "person": {
+        "name": "Anderson",
+        "document": "65499776067",
+        "dateBirthday": "1990-01-01"
+    },
+    "withdrawalDayLimit": 10000.00,
+    "accountType": "CHECKING_ACCOUNT"
+}'
+```
+
 #### Registrar o saque
+
+```shell
+curl --location --request POST 'http://localhost:8090/withdraws?accountId=1' \
+--header 'Accept-Version: v1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "amount": 500.0
+}'
+```
+
 #### Registrar o deposito
+
+```shell
+curl --location --request POST 'http://localhost:8090/deposits?accountId=1' \
+--header 'Accept-Version: v1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"amount": 1000.0
+}'
+```
+
 #### Consultar o saldo
+
+```shell
+curl --location --request GET 'http://localhost:8090/balances?accountId=1' \
+--header 'Accept-Version: v1'
+```
+
 #### Consultar o extrato
+
+```shell
+curl --location --request GET 'http://localhost:8090/accounts/1/transactions' \
+--header 'Accept-Version: v1'
+```
+
 #### Bloquear a conta
+
+```shell
+curl --location --request PATCH 'http://localhost:8090/accounts/1/blocks' \
+--header 'Accept-Version: v1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"value":true
+}'
+```
 
 ## Para realizar o build e os testes do programa
 
