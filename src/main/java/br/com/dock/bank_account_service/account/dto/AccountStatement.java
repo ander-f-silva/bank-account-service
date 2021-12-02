@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.account.controller.dto;
+package br.com.dock.bank_account_service.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AccountStatementResponse {
+public class AccountStatement {
 
     private List<Transaction> transactions;
 

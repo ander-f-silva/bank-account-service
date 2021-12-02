@@ -19,7 +19,7 @@ public class CreateNewAccount {
                         "Create with success - OK",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"id\":2,\"person\":{\"id\":2,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"withdrawalDayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdDate\":\"" + today + "\"}",
+                                "{\"id\":2,\"person\":{\"id\":2,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"withdrawalDayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdAt\":\"" + today + "\"}",
                                 HttpStatus.OK)
                 ),
                 Arguments.of(

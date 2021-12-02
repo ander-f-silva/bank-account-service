@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.account.controller.dto;
+package br.com.dock.bank_account_service.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class BlockAccountRequest {
+public class BlockAccount {
     @NotNull
     private Boolean value;
 }
