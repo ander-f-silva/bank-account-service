@@ -17,11 +17,13 @@ class DoingDeposit implements DoDeposit {
 
     private final TransactionRepository transactionRepository;
 
+    /*
+  TODO:
+    Fazer a tratativa para caso de conta não econtrada
+    Fazer a query somente para contas ativas
+  */
     @Override
     public void apply(Long accountId, Deposit deposit) {
-        //TODO: Fazer a tratativa para caso de conta não econtrada
-        //TODO: Fazer a query somente para contas ativas
-
         var accountEntityRecoded = accountRepository.findById(accountId)
                 .orElseThrow(NoSuchElementException::new);
 
