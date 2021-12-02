@@ -10,7 +10,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class WithDrawRequest {
+public class WithDraw {
     @Positive
     @NotNull
     private Double amount;
