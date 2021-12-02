@@ -1,4 +1,4 @@
-create table Transaction
+create table if not exists Transaction
 (
     idTransaction int primary key auto_increment,
     idAccount     int           not null,
@@ -6,5 +6,3 @@ create table Transaction
     createdAt     datetime,
     foreign key (idAccount) references Account (idAccount)
 );
-
-create index index_transaction_createAt on transaction (createdAt);
