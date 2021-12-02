@@ -2,9 +2,8 @@ package br.com.dock.bank_account_service.account.controller;
 
 
 import br.com.dock.bank_account_service.account.dto.Account;
+import br.com.dock.bank_account_service.account.dto.AccountAtiveStatus;
 import br.com.dock.bank_account_service.account.dto.AccountStatement;
-import br.com.dock.bank_account_service.account.dto.BlockAccount;
-import br.com.dock.bank_account_service.account.repository.AccountRepository;
 import br.com.dock.bank_account_service.account.service.CreateAccount;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,14 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/accounts")
 @AllArgsConstructor
 class AccountsController {
-    private final AccountRepository accountRepository;
-
     private final CreateAccount createAccount;
 
     @PostMapping
@@ -34,13 +30,7 @@ class AccountsController {
 
     @PatchMapping("/{accountId}/blocks")
     @Transactional
-    ResponseEntity<Void> block(@PathVariable Long accountId, @RequestBody @Valid BlockAccount request) {
-        //TODO: Validate if account exist
-        if (!accountRepository.existsById(accountId)) {
-            throw new NoSuchElementException();
-        }
-
-        accountRepository.updateFlagActiveByAccountId(request.getValue(), accountId);
+    ResponseEntity<Void> block(@PathVariable Long accountId, @RequestBody @Valid AccountAtiveStatus request) {
 
         return ResponseEntity.noContent().build();
     }

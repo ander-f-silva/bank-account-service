@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class BlockAccount {
+public class AccountAtiveStatus {
     @NotNull
     private Boolean value;
 }
