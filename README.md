@@ -23,6 +23,18 @@ Abaixo há os tópicos com o que documentatei antes de escrever a código onde h
 - [Desenho das APIS](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/contract_api.md)
 - [Desenho das DER](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/database.md)
 
+Importante enfatizar é que para nomeclatura e organização dos pacotes eu usei as conversões documentas ou mencionadas 
+pela oracle, a empresa que cuida do spring boot
+
+Hoje tenho conhecimento que dois tipo de organização de pacotes no mundo java. Uma é organização de package by feature e by layer
+, neste projeto eu mesclei os dois modelos e para separação de nome que possui "-" eu substituo por "_" conforme a documentação.
+
+Abaixo os links importantes para explicar o uso e conversões dos pacotes que apliquei no projeto:
+
+- Pacote com "_" neste exemplo: bank-account-service.dock.com.br (http://account-service.dock.com.br) → package `br.com.dock.account_service`  [https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html)
+- Modelo package by feacture [https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code](https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code)
+- Modelo de packages [http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The package-by-feature style still honors the idea of,t seem necessary or desirable](http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The%20package%2Dby%2Dfeature%20style%20still%20honors%20the%20idea%20of,t%20seem%20necessary%20or%20desirable).
+- Outras fontes [https://phauer.com/2020/package-by-feature/](https://phauer.com/2020/package-by-feature/)
 
 ## Tecnologias utilizadas
 
