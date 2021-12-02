@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.transaction.controller.dto;
+package br.com.dock.bank_account_service.transaction.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package br.com.dock.bank_account_service.transaction.controller;
 
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
-import br.com.dock.bank_account_service.transaction.controller.dto.WithDrawRequest;
+import br.com.dock.bank_account_service.transaction.dto.WithDrawRequest;
 import br.com.dock.bank_account_service.transaction.repository.TransactionEntity;
 import br.com.dock.bank_account_service.transaction.repository.TransactionRepository;
 import lombok.AllArgsConstructor;

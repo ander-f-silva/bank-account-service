@@ -1,4 +1,4 @@
-package br.com.dock.bank_account_service.transaction.controller.dto;
+package br.com.dock.bank_account_service.transaction.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DepositRequest {
+public class Deposit {
     @Positive
     @NotNull
     private Double amount;
