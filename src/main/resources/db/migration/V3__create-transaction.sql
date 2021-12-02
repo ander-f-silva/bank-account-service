@@ -1,13 +1,8 @@
-create table Transaction
+create table if not exists Transaction
 (
     idTransaction int primary key auto_increment,
     idAccount     int           not null,
     amount        decimal(9, 2) not null,
-    createdAt     datetime
+    createdAt     datetime,
+    foreign key (idAccount) references Account (idAccount)
 );
-
-alter table Transaction
-    add constraint fk_transaction_account
-        foreign key (idAccount) references Account (idAccount);
-
-create index index_transaction_createAt on transaction (createdAt);

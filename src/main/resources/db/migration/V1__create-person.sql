@@ -1,10 +1,8 @@
-create table Person
+create table if not exists Person
 (
     idPerson int primary key auto_increment,
     name     varchar(150) not null,
     document varchar(80)  not null,
-    birthday datetime
+    birthday datetime,
+    constraint constraint_document unique key (document)
 );
-
-alter table Person
-    add constraint constraint_document unique key (document);
