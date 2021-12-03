@@ -1,11 +1,11 @@
-package br.com.dock.bank_account_service.account.controller.dto;
+package br.com.dock.bank_account_service.account.dto;
 
 import java.util.Arrays;
 
 public enum AccountType {
     CHECKING_ACCOUNT(1);
 
-    private Integer valueNumber;
+    private final Integer valueNumber;
 
     AccountType(Integer valueNumber) {
         this.valueNumber = valueNumber;

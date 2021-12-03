@@ -34,8 +34,7 @@ public class DepositsControllerTest {
     private static final String HEAD_ACCEPT_VERSION = "Accept-version";
     private static final String HEAD_CONTENT_TYPE = "Content-type";
 
-    private static final String PATH_DEPOSITS_RESOURCE = "/deposits";
-    private static final String FIRST_QUERY_STRING_ACCOUNT_ID = "?accountId=1";
+    private static final String PATH_DEPOSITS_RESOURCE = "/deposits?accountId=";
     private static final String VERSION_1 = "v1";
 
     static MockMvc mockMvc;
@@ -76,7 +75,7 @@ public class DepositsControllerTest {
     @MethodSource("br.com.dock.bank_account_service.transaction.controller.cases.ApplyDeposit#parametersApplyDeposit")
     void testShouldApplyAnDepositToAccount(String title, ApplyDeposit.UserCase userCase) throws Exception {
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .post(PATH_DEPOSITS_RESOURCE + FIRST_QUERY_STRING_ACCOUNT_ID)
+                        .post(PATH_DEPOSITS_RESOURCE + userCase.getQueryAccountId())
                         .header(HEAD_ACCEPT_VERSION, VERSION_1)
                         .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(userCase.getRequest()))

@@ -15,45 +15,30 @@ public class BlockAccount {
                         "Block with success - Not Content",
                         new UserCase(
                                 "{\"value\": true}",
+                                1L,
                                 HttpStatus.NO_CONTENT)
                 ),
                 Arguments.of(
                         "Value is null - Bad Request",
                         new UserCase(
                                 "{\"value\": null}",
+                                1L,
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
                         "Value is not valid - Bad Request",
                         new UserCase(
                                 "{\"value\": \"asdfa\"}",
+                                1L,
                                 HttpStatus.BAD_REQUEST)
+                ),
+                Arguments.of(
+                        "Account not found - Not found",
+                        new UserCase(
+                                "{\"value\": \"true\"}",
+                                4L,
+                                HttpStatus.NOT_FOUND)
                 )
-//                Arguments.of(
-//                        "CPF is invalid - Bad Request",
-//                        new UserCase(
-//                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"111111111\", \"dateBirthday\": \"1990-01-01\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-//                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
-//                                HttpStatus.BAD_REQUEST)
-//                ),
-//                Arguments.of(
-//                        "Date Birthday is invalid - Bad Request",
-//                        new UserCase(
-//                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-//                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
-//                                HttpStatus.BAD_REQUEST)
-//                ),
-//                Arguments.of(
-//                        "Day Limit is invalid - Bad Request",
-//                        new UserCase(
-//                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"dayLimit\": -10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-//                                "{\"timestamp\":\"" + today + "\",\"path\":\"/accounts\",\"status\":400,\"error\":\"Bad Request\"}",
-//                                HttpStatus.BAD_REQUEST)
-//                )
-
-                /*
-                    TODO: Fazer a validação para conta não encontrada
-                 */
         );
     }
 
@@ -61,6 +46,7 @@ public class BlockAccount {
     @Getter
     public static class UserCase {
         private String request;
+        private Long paramAccountId;
         private HttpStatus httpStatus;
     }
 }

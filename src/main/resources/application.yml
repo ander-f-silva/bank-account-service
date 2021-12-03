@@ -9,3 +9,9 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+logging:
+  level:
+    root: warn
+    org:
+      springframework:
+        web: info

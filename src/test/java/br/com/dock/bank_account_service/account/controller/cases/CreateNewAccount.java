@@ -19,7 +19,7 @@ public class CreateNewAccount {
                         "Create with success - OK",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
-                                "{\"id\":2,\"person\":{\"id\":2,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"withdrawalDayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdDate\":\"" + today + "\"}",
+                                "{\"id\":2,\"person\":{\"id\":2,\"name\":\"Antonio da Silva\",\"document\":\"84047092037\",\"dateBirthday\":\"1990-01-01\"},\"balance\":0.0,\"withdrawalDayLimit\":10000.0,\"accountType\":\"CHECKING_ACCOUNT\",\"createdAt\":\"" + today + "\"}",
                                 HttpStatus.OK)
                 ),
                 Arguments.of(
@@ -49,11 +49,14 @@ public class CreateNewAccount {
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"199S-01-A1\"},\"withdrawalDayLimit\": -10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
+                ),
+                Arguments.of(
+                        "Account already exist - Unprocessable Entity",
+                        new UserCase(
+                                "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
+                                "",
+                                HttpStatus.UNPROCESSABLE_ENTITY)
                 )
-
-                /*
-                    TODO: Fazer a validação para não deixar que usuário seja cadastrado quando com uma CPF que já existe na base
-                 */
         );
     }
 
