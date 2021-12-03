@@ -1,0 +1,17 @@
+spring:
+  main:
+    lazy-initialization: true
+  jackson:
+    date-format: "yyyy-MM-dd"
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+logging:
+  level:
+    root: warn
+    org:
+      springframework:
+        web: info
