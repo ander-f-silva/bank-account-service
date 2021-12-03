@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ class CreationAccount implements CreateAccount {
     private final PersonRepository personRepository;
 
     @Override
+    @Transactional
     public Account perform(Account account) {
         return saveAccount(account);
     }
@@ -40,7 +42,7 @@ class CreationAccount implements CreateAccount {
         var accountNewEntity = AccountEntity.builder()
                 .idPerson(person.getId())
                 .withdrawalDayLimit(account.getWithdrawalDayLimit())
-                .flagActive(true)
+                .flagActive(false)
                 .balance(0.0)
                 .createdAt(LocalDate.now())
                 .accountType(account.getAccountType().getValueNumber())

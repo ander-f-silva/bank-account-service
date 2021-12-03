@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -25,9 +26,10 @@ class DoingWithDraw implements DoWithdraw {
     private final TransactionRepository transactionRepository;
 
     @Override
+    @Transactional
     public void apply(Long accountId, WithDraw withDraw) {
         var accountEntityRecoded = accountRepository.findById(accountId)
-                .filter(AccountEntity::getFlagActive)
+                .filter(accountEntity -> accountEntity.getFlagActive().equals(false))
                 .orElseThrow(() -> {
                     logger.error("[event: Withdraw Account] [param path: (accountId:{})] Account not found", accountId);
                     return new AccountNotFoundException();
