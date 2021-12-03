@@ -53,7 +53,7 @@ class AccountsController {
     }
 
     @GetMapping("/{accountId}/transactions")
-    ResponseEntity<AccountStatement> searchAccountStatement(@RequestParam(value = "page", defaultValue = "1") @Valid @Positive @Max(100) Integer page, @RequestParam(value = "size", defaultValue = "30") @Valid @Positive @Max(100) Integer size, @PathVariable Long accountId) {
+    ResponseEntity<AccountStatement> getAccountStatement(@RequestParam(value = "page", defaultValue = "1") @Valid @Positive @Max(100) Integer page, @RequestParam(value = "size", defaultValue = "30") @Valid @Positive @Max(100) Integer size, @PathVariable Long accountId) {
         var accountStatement = getAccountStatement.findByAccountId(accountId, page, size);
 
         logger.info("[event: Get Account Statement] [param path: (accountId:{})] [response: {}]  Get Account Statement with success", accountId, accountStatement);
