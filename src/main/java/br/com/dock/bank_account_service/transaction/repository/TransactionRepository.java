@@ -1,13 +1,17 @@
 package br.com.dock.bank_account_service.transaction.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
-public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
+@Repository
+public interface TransactionRepository extends PagingAndSortingRepository<TransactionEntity, Long> {
     @Override
     @Modifying
     @Query("delete from Transaction")
@@ -16,6 +20,5 @@ public interface TransactionRepository extends CrudRepository<TransactionEntity,
     @Query("select sum(amount) from Transaction where idAccount = :idAccount and createdAt = :createdAt")
     Double sumTransactionInDay(@Param("idAccount") Long idAccount, @Param("createdAt") LocalDate createdAt);
 
-    @Query("select sum(amount) from Transaction where idAccount = :idAccount")
-    Double sumTransactionInDay(@Param("idAccount") Long idAccount);
+    Page<TransactionEntity> findAllByIdAccount(Long accountId, Pageable pageable);
 }

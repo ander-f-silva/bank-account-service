@@ -7,6 +7,8 @@ import br.com.dock.bank_account_service.account.repository.AccountEntity;
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
 import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
+import br.com.dock.bank_account_service.transaction.repository.TransactionEntity;
+import br.com.dock.bank_account_service.transaction.repository.TransactionRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +45,7 @@ public class AccountsControllerTest {
     static MockMvc mockMvc;
 
     @BeforeAll
-    static void setUp(@Autowired WebApplicationContext webApplicationContext, @Autowired PersonRepository personRepository, @Autowired AccountRepository accountRepository) {
+    static void setUp(@Autowired WebApplicationContext webApplicationContext, @Autowired PersonRepository personRepository, @Autowired AccountRepository accountRepository,  @Autowired TransactionRepository transactionRepository) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         var person = PersonEntity.builder()
@@ -64,10 +66,27 @@ public class AccountsControllerTest {
                 .build();
 
         accountRepository.save(account);
+
+        var depositTransaction = TransactionEntity.builder()
+                .idAccount(account.getIdAccount())
+                .amount(100.0)
+                .createdAt(LocalDate.of(2021, 12, 1))
+                .build();
+
+        transactionRepository.save(depositTransaction);
+
+        var withdrawTransaction = TransactionEntity.builder()
+                .idAccount(account.getIdAccount())
+                .amount(-50.0)
+                .createdAt(LocalDate.of(2021, 12, 1))
+                .build();
+
+        transactionRepository.save(withdrawTransaction);
     }
 
     @AfterAll
-    static void tearDown(@Autowired PersonRepository personRepository, @Autowired AccountRepository accountRepository) {
+    static void tearDown(@Autowired PersonRepository personRepository, @Autowired AccountRepository accountRepository, @Autowired TransactionRepository transactionRepository) {
+        transactionRepository.deleteAll();
         accountRepository.deleteAll();
         personRepository.deleteAll();
     }
