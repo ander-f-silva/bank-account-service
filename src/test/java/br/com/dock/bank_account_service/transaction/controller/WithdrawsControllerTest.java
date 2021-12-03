@@ -53,7 +53,7 @@ public class WithdrawsControllerTest {
 
         var account = AccountEntity.builder()
                 .idPerson(personCreated.getIdPerson())
-                .withdrawalDayLimit(10000.0)
+                .withdrawalDayLimit(100.00)
                 .flagActive(true)
                 .balance(1000.0)
                 .createdAt(LocalDate.now())

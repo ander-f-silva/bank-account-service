@@ -2,6 +2,7 @@ package br.com.dock.bank_account_service.transaction.serivce;
 
 import br.com.dock.bank_account_service.account.expection.AccountNotFoundException;
 import br.com.dock.bank_account_service.account.expection.AmountAboveBalanceException;
+import br.com.dock.bank_account_service.account.expection.WithdrawLimitException;
 import br.com.dock.bank_account_service.account.repository.AccountEntity;
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
 import br.com.dock.bank_account_service.transaction.dto.WithDraw;
@@ -23,23 +24,23 @@ class DoingWithDraw implements DoWithdraw {
 
     private final TransactionRepository transactionRepository;
 
-    /*
-  TODO:
-    Fazer a validação para limite de saque por dia
-    Fazer a validação se o valor do saque é maior que da conta
-  */
     @Override
     public void apply(Long accountId, WithDraw withDraw) {
         var accountEntityRecoded = accountRepository.findById(accountId)
                 .filter(AccountEntity::getFlagActive)
                 .orElseThrow(() -> {
-                    logger.info("[event: Withdraw Account] [param path: (accountId:{})] Account not found", accountId);
-
+                    logger.error("[event: Withdraw Account] [param path: (accountId:{})] Account not found", accountId);
                     return new AccountNotFoundException();
                 });
 
         if (checkAmountAboveBalance(accountEntityRecoded, withDraw)) {
+            logger.error("[event: Withdraw Account] [param path: (accountId:{})] Amount above balance", accountId);
             throw new AmountAboveBalanceException();
+        }
+
+        if (checkTfTotalDailyTransitionsGreaterThanLimit(accountEntityRecoded, withDraw)) {
+            logger.error("[event: Withdraw Account] [param path: (accountId:{})] Total daily transitions greater than withdraw limit", accountId);
+            throw new WithdrawLimitException();
         }
 
         var currentBalance = accountEntityRecoded.getBalance() - withDraw.getAmount();
@@ -57,7 +58,15 @@ class DoingWithDraw implements DoWithdraw {
         transactionRepository.save(newTransaction);
     }
 
-    private boolean checkAmountAboveBalance(AccountEntity accountEntity,  WithDraw withDraw) {
+    private boolean checkAmountAboveBalance(AccountEntity accountEntity, WithDraw withDraw) {
         return accountEntity.getBalance() < withDraw.getAmount();
+    }
+
+    private boolean checkTfTotalDailyTransitionsGreaterThanLimit(AccountEntity accountEntity, WithDraw withDraw) {
+        var totalTransactionsDaily = transactionRepository.sumTransactionInDay(accountEntity.getIdAccount(), LocalDate.now());
+
+        var totalWithdraw = totalTransactionsDaily == null ? 0.0 : totalTransactionsDaily * -1.0;
+
+        return (totalWithdraw + withDraw.getAmount()) > accountEntity.getWithdrawalDayLimit();
     }
 }

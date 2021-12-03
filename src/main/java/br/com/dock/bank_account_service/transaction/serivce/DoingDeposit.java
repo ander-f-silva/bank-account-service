@@ -27,8 +27,7 @@ class DoingDeposit implements DoDeposit {
         var accountEntityRecoded = accountRepository.findById(accountId)
                 .filter(AccountEntity::getFlagActive)
                 .orElseThrow(() -> {
-                    logger.info("[event: Deposit Account] [param path: (accountId:{})] Account not found", accountId);
-
+                    logger.error("[event: Deposit Account] [param path: (accountId:{})] Account not found", accountId);
                     return new AccountNotFoundException();
                 });
 

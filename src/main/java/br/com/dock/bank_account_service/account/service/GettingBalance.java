@@ -21,7 +21,7 @@ class GettingBalance implements GetBalance {
         var accountEntityRecoded = accountRepository.findById(accountId)
                 .filter(AccountEntity::getFlagActive)
                 .orElseThrow(() -> {
-                    logger.info("[event: Get Balance] [param path: (accountId:{})]] Account not found", accountId);
+                    logger.error("[event: Get Balance] [param path: (accountId:{})]] Account not found", accountId);
 
                     return new AccountNotFoundException();
                 });

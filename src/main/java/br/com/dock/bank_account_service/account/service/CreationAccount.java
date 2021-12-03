@@ -31,7 +31,7 @@ class CreationAccount implements CreateAccount {
 
     private Account saveAccount(final Account account) {
         if (personRepository.existsByDocument(account.getPerson().getDocument())) {
-            logger.info("[event: Create Account] [request: {}] Account already exist", account);
+            logger.error("[event: Create Account] [request: {}] Account already exist", account);
             throw  new AccountAlreadyExistException();
         }
 

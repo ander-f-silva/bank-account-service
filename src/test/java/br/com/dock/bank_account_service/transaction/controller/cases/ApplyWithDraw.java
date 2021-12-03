@@ -19,7 +19,7 @@ public class ApplyWithDraw {
                         "Apply with success - Created",
                         new UserCase(
                                 1L,
-                                "{\"amount\": 1000.00}",
+                                "{\"amount\": 10.00}",
                                 "",
                                 HttpStatus.CREATED)
                 ),
@@ -54,11 +54,15 @@ public class ApplyWithDraw {
                                 "{\"amount\": 100000.00}",
                                 "",
                                 HttpStatus.UNPROCESSABLE_ENTITY)
+                ),
+                Arguments.of(
+                        "Passed the daily withdrawal limit - Unprocessable Entity",
+                        new UserCase(
+                                1L,
+                                "{\"amount\": 101.00}",
+                                "",
+                                HttpStatus.UNPROCESSABLE_ENTITY)
                 )
-
-                /*
-                    TODO: Fazer a validação para não deixar que usuário retire o dinheiro da conta da forma que fica negativa
-                 */
         );
     }
 
