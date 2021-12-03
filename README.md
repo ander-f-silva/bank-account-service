@@ -134,6 +134,15 @@ curl --location --request GET 'http://localhost:8090/accounts/1/transactions' \
 --header 'Accept-Version: v1'
 ```
 
+ou
+
+```shell
+curl --location --request GET 'http://localhost:8090/accounts/1/transactions?page=2&size=10' \
+--header 'Accept-Version: v1'
+```
+
+**Nota**: Estou usuando query string para páginação que são `page` and `size`, caso não preencha os valores default são page igual a 1 e size igual a 30 em ordem da últimos movimentos realizados na conta
+
 #### Bloquear a conta
 
 ```shell
