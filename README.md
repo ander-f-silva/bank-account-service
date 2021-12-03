@@ -1,6 +1,6 @@
-# Projeto Serviço de Conta para Banco
+# Projeto para gerir uma Conta bancaria
 
-Desenvolvi uma solução para realizar a criação de contas para um banco e realizar as operações de movimentão como deposito e saque.
+Desenvolvi uma solução para gerenciar uma conta bancaria, abaixo segue as funcionalidades:
 
 - Registrar a conta;
 - Registrar o saque;
@@ -11,20 +11,19 @@ Desenvolvi uma solução para realizar a criação de contas para um banco e rea
 
 ## Reflexão sobre o problema
 
-Para construir a aplicação utilizei o framework Spring, pois, por ter maior conhecimento nos seus recursos para criar os testes, configurar o acesso ao banco de dados e desenvolver as apis de forma rápida.
+Para construir a aplicação utilizei o framework Spring com Spring Boot, Spring Data e Spring MVC, pois por ter maior conhecimento com os seus recursos, pude criar os testes, configurar o acesso ao banco de dados e desenvolver as apis de forma rápida.
 
 Para este projeto não será há necessidade de instalar as ferramentas para fazer o build e o deploy. Neste caso estou a utilizar o wrapper do maven que está embutido no projeto e docker-compose que monta o container do banco de dados, da aplicação e do proxy reverso. 
 
-Por entender que o mundo de desenvolvimento esta globalizado, utilizei como idioma o Inglês para escrever o código e as apis.
+Por entender que o mundo de desenvolvimento esta globalizado, utilizei o idioma Inglês para escrever o código da aplicação.
 
-Abaixo há os tópicos com o que documentatei antes de escrever a código onde há algumas sessões para temas:
+Abaixo estão as sessões de como eu pensei no projeto antes de codificar:
 
 - [Arquitetura](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/architecture.md)
 - [Desenho das APIS](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/contract_api.md)
 - [Desenho das DER](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/database.md)
 
-Importante enfatizar é que para nomeclatura e organização dos pacotes eu usei as conversões documentas ou mencionadas 
-pela oracle, a empresa que cuida do spring boot
+Importante enfatizar é que para nomeclatura e organização dos pacotes eu usei as conversões mais comuns que olhamos no mercado.
 
 Hoje tenho conhecimento que dois tipo de organização de pacotes no mundo java. Uma é organização de package by feature e by layer
 , neste projeto eu mesclei os dois modelos e para separação de nome que possui "-" eu substituo por "_" conforme a documentação.
@@ -32,8 +31,10 @@ Hoje tenho conhecimento que dois tipo de organização de pacotes no mundo java.
 Abaixo os links importantes para explicar o uso e conversões dos pacotes que apliquei no projeto:
 
 - Pacote com "_" neste exemplo: bank-account-service.dock.com.br (http://account-service.dock.com.br) → package `br.com.dock.account_service`  [https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html)
+
 - Modelo package by feacture [https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code](https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code)
-- Modelo de packages [http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The package-by-feature style still honors the idea of,t seem necessary or desirable](http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The%20package%2Dby%2Dfeature%20style%20still%20honors%20the%20idea%20of,t%20seem%20necessary%20or%20desirable).
+- Modelo de packages [http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The package-by-feature style still honors the idea of,t seem necessary or desirable](http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The%20package%2Dby%2Dfeature%20style%20still%20honors%20the%20idea%20of,t%20seem%20necessary%20or%20desirable)
+
 - Outras fontes [https://phauer.com/2020/package-by-feature/](https://phauer.com/2020/package-by-feature/)
 
 **Nota**: Um ponto importante é sobre a implementação dos teste, como eu fiz um desenvolvimento que começou na camada de api, fiz os teste de integrações que cobre vários cenários da aplicação e como
@@ -70,16 +71,15 @@ OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
 
 * Spring Boot - Setup de projeto.
 
-
 ## Documentação através do swagger (versão 3.X)
 
 O projeto possui uma documentação de API atravez do Open API.
 
 Acesse http://localhost:8090/swagger-ui/index.html#/ para ver e testar os endpoints.
 
-![Open API](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/image/swagger.png)
+![SWAGGER API](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/image/swagger.png)
 
-### Acess as api através do CURS
+### Consumir as api através do CURL'S
 
 #### Registrar a conta
 
