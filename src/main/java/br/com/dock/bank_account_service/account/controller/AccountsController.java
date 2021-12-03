@@ -33,7 +33,6 @@ class AccountsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    @Transactional
     ResponseEntity<Account> create(@RequestBody @Valid Account account) {
         var accountCreated = createAccount.perform(account);
 
@@ -43,7 +42,6 @@ class AccountsController {
     }
 
     @PatchMapping("/{accountId}/blocks")
-    @Transactional
     ResponseEntity<Void> block(@PathVariable Long accountId, @RequestBody @Valid AccountAtiveStatus accountAtiveStatus) {
         blockAccount.apply(accountId, accountAtiveStatus);
 

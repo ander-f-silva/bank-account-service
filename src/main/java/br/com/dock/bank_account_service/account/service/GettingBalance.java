@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -17,9 +18,10 @@ class GettingBalance implements GetBalance {
     private final AccountRepository accountRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Amount findByAccountId(Long accountId) {
         var accountEntityRecoded = accountRepository.findById(accountId)
-                .filter(AccountEntity::getFlagActive)
+                .filter(accountEntity -> accountEntity.getFlagActive().equals(false))
                 .orElseThrow(() -> {
                     logger.error("[event: Get Balance] [param path: (accountId:{})]] Account not found", accountId);
 

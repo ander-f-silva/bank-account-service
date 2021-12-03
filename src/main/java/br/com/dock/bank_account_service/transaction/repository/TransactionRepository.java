@@ -17,7 +17,7 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
     @Query("delete from Transaction")
     void deleteAll();
 
-    @Query("select sum(amount) from Transaction where idAccount = :idAccount and createdAt = :createdAt")
+    @Query("select sum(amount) from Transaction where idAccount = :idAccount and createdAt = :createdAt and amount < 0.0")
     Double sumTransactionInDay(@Param("idAccount") Long idAccount, @Param("createdAt") LocalDate createdAt);
 
     Page<TransactionEntity> findAllByIdAccount(Long accountId, Pageable pageable);

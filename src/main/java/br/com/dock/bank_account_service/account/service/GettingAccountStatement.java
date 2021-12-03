@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
@@ -25,11 +26,14 @@ class GettingAccountStatement implements GetAccountStatement {
     private final TransactionRepository transactionRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public AccountStatement findByAccountId(Long accountId, Integer page, Integer size) {
-        if (!accountRepository.existsById(accountId)) {
-            logger.error("[event: Get Account Statement][param path: (accountId:{})] Account not found", accountId);
-            throw new AccountNotFoundException();
-        }
+       accountRepository.findById(accountId)
+                .filter(accountEntity -> accountEntity.getFlagActive().equals(false))
+                .orElseThrow(() -> {
+                    logger.error("[event: Get Account Statement][param path: (accountId:{})] Account not found", accountId);
+                    return new AccountNotFoundException();
+                });
 
         PageRequest pageable = PageRequest.of((page -1), size, Sort.by("createdAt").descending());
 

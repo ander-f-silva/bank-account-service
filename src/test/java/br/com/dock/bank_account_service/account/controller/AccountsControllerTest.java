@@ -9,9 +9,7 @@ import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import br.com.dock.bank_account_service.transaction.repository.TransactionEntity;
 import br.com.dock.bank_account_service.transaction.repository.TransactionRepository;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @ActiveProfiles("test")
 @DisplayName("Integration test to resource /accounts")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AccountsControllerTest {
     private static final String HEAD_ACCEPT_VERSION = "Accept-version";
     private static final String HEAD_CONTENT_TYPE = "Content-type";
@@ -59,7 +58,7 @@ public class AccountsControllerTest {
         var account = AccountEntity.builder()
                 .idPerson(personCreated.getIdPerson())
                 .withdrawalDayLimit(10000.0)
-                .flagActive(true)
+                .flagActive(false)
                 .balance(100.0)
                 .createdAt(LocalDate.now())
                 .accountType(1)
@@ -91,6 +90,7 @@ public class AccountsControllerTest {
         personRepository.deleteAll();
     }
 
+    @Order(1)
     @DisplayName("Should create an new account")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.CreateNewAccount#parametersCreateNewAccount")
@@ -106,20 +106,7 @@ public class AccountsControllerTest {
         assertThat(mvcResult.getResponse().getContentAsString(), equalTo(userCase.getResponse()));
     }
 
-    @DisplayName("Should block an account")
-    @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.BlockAccount#parametersBlockAccount")
-    void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) throws Exception {
-        var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .patch(PATH_ACCOUNTS_RESOURCE + "/" + userCase.getParamAccountId() + PATH_BLOCKS)
-                        .header(HEAD_ACCEPT_VERSION, VERSION_1)
-                        .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .content(userCase.getRequest()))
-                .andReturn();
-
-        assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
-    }
-
+    @Order(2)
     @DisplayName("Should find the account statement")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement#parametersFindAccountStatement")
@@ -132,5 +119,20 @@ public class AccountsControllerTest {
 
         assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
         assertThat(mvcResult.getResponse().getContentAsString(), equalTo(userCase.getResponse()));
+    }
+
+    @Order(3)
+    @DisplayName("Should block an account")
+    @ParameterizedTest(name = "{index} {0}")
+    @MethodSource("br.com.dock.bank_account_service.account.controller.cases.BlockAccount#parametersBlockAccount")
+    void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) throws Exception {
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                        .patch(PATH_ACCOUNTS_RESOURCE + "/" + userCase.getParamAccountId() + PATH_BLOCKS)
+                        .header(HEAD_ACCEPT_VERSION, VERSION_1)
+                        .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(userCase.getRequest()))
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getStatus(), equalTo(userCase.getHttpStatus().value()));
     }
 }

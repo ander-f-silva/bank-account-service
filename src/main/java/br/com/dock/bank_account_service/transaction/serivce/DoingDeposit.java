@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -23,9 +24,10 @@ class DoingDeposit implements DoDeposit {
     private final TransactionRepository transactionRepository;
 
     @Override
+    @Transactional
     public void apply(Long accountId, Deposit deposit) {
         var accountEntityRecoded = accountRepository.findById(accountId)
-                .filter(AccountEntity::getFlagActive)
+                .filter(accountEntity -> accountEntity.getFlagActive().equals(false))
                 .orElseThrow(() -> {
                     logger.error("[event: Deposit Account] [param path: (accountId:{})] Account not found", accountId);
                     return new AccountNotFoundException();
