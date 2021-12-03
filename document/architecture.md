@@ -15,9 +15,9 @@ Para os próxima solução vou ilustrar o que eu pensei para resolver este probl
 
 ## Solução para a Arquitetura inicial
 
-Neste momento comecei a pensar em trabalhar com distribuir a carga da aplicação usando proxy reverço que encanhará a requisição para o container, dessa forma vamos exigir menos de algumas instancias (pensando em deploiar em uma cloud, penso em usar K8 que já tem várias soluções nativas para este caso, usando deploy, service e outros recursos). Em relaçõa base estou trabalhando com replicas para trabalhar no caso de um banco cair a outra instancia toma o controle, outro ponto interensante é que podemos distruir as funcionalidade para um banco de escrita e outra para leitura.
+Neste momento comecei a pensar em trabalhar com distribuir a carga da aplicação usando proxy reverço que encanhará a requisição para o container, dessa forma vamos exigir menos de algumas instancias. Em relação a base estou trabalhando com replicas para distruir as funcionalidade de escrita e outra para leitura do banco.
 
-Nota importate para esta solução é que pretendo implementa esta solução para rodar locamente usando docker com docker-compose, para ambiente e cloud se possível vou usar a AWS.
+Nota importante para esta solução é rodar locamente usando docker com docker-compose, para ambiente e cloud se possível vou usar a AWS.
 
 ![Arq2](https://github.com/ander-f-silva/bank-account-service/blob/develop/document/image/second_architecture.png)
 

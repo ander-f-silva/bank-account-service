@@ -65,7 +65,7 @@ OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
 
 * Migration - Flayway;
 
-* Banco de Dados - H2 (teste) e Mysql (docker);
+* Banco de Dados - H2 (teste) e Mysql (docker com replica para master na porta 3306 e slave na porta 3307) ;
 
 * Spring Web (MVC) - Framerwork Web para geração das API's (versão 2.5.7) com Tomcat 9;
 
@@ -188,7 +188,7 @@ Para executar o build:
 Fazer o deploy e construir a infra com replica de base de dados e aplicação com load balance com proxy reverso:
 
 ```shell script
-docker-compose up --scale app=3
+docker-compose up --scale app=4
 ```
 
 Se tudo ocorreu bem acesso o ``http://localhost:8090/actuator/health`` para verificar se aplicação esta no ar.

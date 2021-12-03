@@ -23,7 +23,6 @@ class DepositsController {
     private final DoDeposit doDeposit;
 
     @PostMapping
-    @Transactional
     ResponseEntity<Void> apply(@RequestParam Long accountId, @RequestBody @Valid Deposit deposit) {
         doDeposit.apply(accountId, deposit);
 

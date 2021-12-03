@@ -51,11 +51,11 @@ public class CreateNewAccount {
                                 HttpStatus.BAD_REQUEST)
                 ),
                 Arguments.of(
-                        "Account already exist - Unprocessable Entity",
+                        "Account already exist - Conflict",
                         new UserCase(
                                 "{\"person\": {\"name\": \"Antonio da Silva\", \"document\": \"84047092037\", \"dateBirthday\": \"1990-01-01\"},\"withdrawalDayLimit\": 10000.00, \"accountType\": \"CHECKING_ACCOUNT\"}",
                                 "",
-                                HttpStatus.UNPROCESSABLE_ENTITY)
+                                HttpStatus.CONFLICT)
                 )
         );
     }
