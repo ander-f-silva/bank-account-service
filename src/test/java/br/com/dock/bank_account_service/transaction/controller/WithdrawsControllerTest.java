@@ -34,8 +34,7 @@ public class WithdrawsControllerTest {
     public static final String HEAD_ACCEPT_VERSION = "Accept-version";
     public static final String HEAD_CONTENT_TYPE = "Content-type";
 
-    public static final String PATH_WITHDRAWS_RESOURCE = "/withdraws";
-    public static final String FIRST_QUERY_STRING_ACCOUNT_ID = "?accountId=1";
+    public static final String PATH_WITHDRAWS_RESOURCE = "/withdraws?accountId=";
     public static final String VERSION_1 = "v1";
 
     static MockMvc mockMvc;
@@ -76,7 +75,7 @@ public class WithdrawsControllerTest {
     @MethodSource("br.com.dock.bank_account_service.transaction.controller.cases.ApplyWithDraw#parametersApplyWithDraw")
     void testShouldCreateAnNewAccount(String title, ApplyWithDraw.UserCase userCase) throws Exception {
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .post(PATH_WITHDRAWS_RESOURCE + FIRST_QUERY_STRING_ACCOUNT_ID)
+                        .post(PATH_WITHDRAWS_RESOURCE + userCase.getQueryAccountId())
                         .header(HEAD_ACCEPT_VERSION, VERSION_1)
                         .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(userCase.getRequest()))

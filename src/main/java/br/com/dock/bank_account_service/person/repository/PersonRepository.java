@@ -9,4 +9,6 @@ public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
     @Modifying
     @Query("delete from Person")
     void deleteAll();
+
+    boolean existsByDocument(String document);
 }

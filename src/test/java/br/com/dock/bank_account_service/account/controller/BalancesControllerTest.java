@@ -33,8 +33,7 @@ public class BalancesControllerTest {
     private static final String HEAD_ACCEPT_VERSION = "Accept-version";
     private static final String HEAD_CONTENT_TYPE = "Content-type";
 
-    private static final String PATH_ACCOUNTS_RESOURCE = "/balances";
-    private static final String FIRST_QUERY_STRING_ACCOUNT_ID = "?accountId=1";
+    private static final String PATH_ACCOUNTS_RESOURCE = "/balances?accountId=";
     private static final String VERSION_1 = "v1";
 
     static MockMvc mockMvc;
@@ -74,7 +73,7 @@ public class BalancesControllerTest {
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.SearchBalance#parametersSearchBalance")
     void testShouldGetBalanceOfAccount(String title, SearchBalance.UserCase userCase) throws Exception {
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .get(PATH_ACCOUNTS_RESOURCE + FIRST_QUERY_STRING_ACCOUNT_ID)
+                        .get(PATH_ACCOUNTS_RESOURCE + userCase.getParamAccountId())
                         .header(HEAD_ACCEPT_VERSION, VERSION_1)
                         .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();

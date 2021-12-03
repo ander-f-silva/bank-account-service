@@ -39,7 +39,6 @@ public class AccountsControllerTest {
     private static final String VERSION_1 = "v1";
     private static final String PATH_BLOCKS = "/blocks";
     private static final String PATH_TRANSACTIONS = "/transactions";
-    private static final Long ACCOUNT_ID = 1L;
 
     static MockMvc mockMvc;
 
@@ -93,7 +92,7 @@ public class AccountsControllerTest {
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.BlockAccount#parametersBlockAccount")
     void testShouldBlockAnAccount(String title, BlockAccount.UserCase userCase) throws Exception {
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .patch(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_BLOCKS)
+                        .patch(PATH_ACCOUNTS_RESOURCE + "/" + userCase.getParamAccountId() + PATH_BLOCKS)
                         .header(HEAD_ACCEPT_VERSION, VERSION_1)
                         .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(userCase.getRequest()))
@@ -107,7 +106,7 @@ public class AccountsControllerTest {
     @MethodSource("br.com.dock.bank_account_service.account.controller.cases.FindAccountStatement#parametersFindAccountStatement")
     void testShouldFindTheAccountStatement(String title, FindAccountStatement.UserCase userCase) throws Exception {
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .get(PATH_ACCOUNTS_RESOURCE + "/" + ACCOUNT_ID + PATH_TRANSACTIONS)
+                        .get(PATH_ACCOUNTS_RESOURCE + "/" + userCase.getParamAccountId() + PATH_TRANSACTIONS)
                         .header(HEAD_ACCEPT_VERSION, VERSION_1)
                         .header(HEAD_CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();

@@ -3,11 +3,14 @@ package br.com.dock.bank_account_service.account.service;
 import br.com.dock.bank_account_service.account.dto.Account;
 import br.com.dock.bank_account_service.account.dto.AccountType;
 import br.com.dock.bank_account_service.account.dto.Person;
+import br.com.dock.bank_account_service.account.expection.AccountAlreadyExistException;
 import br.com.dock.bank_account_service.account.repository.AccountEntity;
 import br.com.dock.bank_account_service.account.repository.AccountRepository;
 import br.com.dock.bank_account_service.person.repository.PersonEntity;
 import br.com.dock.bank_account_service.person.repository.PersonRepository;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,6 +18,8 @@ import java.time.LocalDate;
 @Service
 @AllArgsConstructor
 class CreationAccount implements CreateAccount {
+    private static final Logger logger = LoggerFactory.getLogger(CreationAccount.class);
+
     private final AccountRepository accountRepository;
 
     private final PersonRepository personRepository;
@@ -25,6 +30,11 @@ class CreationAccount implements CreateAccount {
     }
 
     private Account saveAccount(final Account account) {
+        if (personRepository.existsByDocument(account.getPerson().getDocument())) {
+            logger.info("[event: Create Account] [request: {}] Account already exist", account);
+            throw  new AccountAlreadyExistException();
+        }
+
         var person = savePerson(account.getPerson());
 
         var accountNewEntity = AccountEntity.builder()

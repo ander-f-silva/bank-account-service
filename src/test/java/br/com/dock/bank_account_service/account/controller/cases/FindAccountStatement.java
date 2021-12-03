@@ -15,12 +15,17 @@ public class FindAccountStatement {
                         "Search performed successfully - OK",
                         new FindAccountStatement.UserCase(
                                 "{\"transactions\":[{\"id\":1,\"amount\":100.0,\"event\":\"DEPOSIT\",\"createdDate\":\"2021-12-01\"},{\"id\":2,\"amount\":50.0,\"event\":\"WITHDRAW\",\"createdDate\":\"2021-12-01\"}]}",
+                                1L,
                                 HttpStatus.OK)
                 )
-
-                /*
-                    TODO: Fazer a validação para checar se o usuário existe
-                 */
+                //TODO: Fazer este teste de conta não encontrada
+//                Arguments.of(
+//                        "Account not found - Not found",
+//                        new FindAccountStatement.UserCase(
+//                                "",
+//                                4000L,
+//                                HttpStatus.FOUND)
+//                )
         );
     }
 
@@ -28,6 +33,7 @@ public class FindAccountStatement {
     @Getter
     public static class UserCase {
         private String response;
+        private Long paramAccountId;
         private HttpStatus httpStatus;
     }
 }

@@ -18,6 +18,7 @@ public class ApplyWithDraw {
                 Arguments.of(
                         "Apply with success - Created",
                         new UserCase(
+                                1L,
                                 "{\"amount\": 1000.00}",
                                 "",
                                 HttpStatus.CREATED)
@@ -25,6 +26,7 @@ public class ApplyWithDraw {
                 Arguments.of(
                         "Amount is negative - Bad Request",
                         new UserCase(
+                                1L,
                                 "{\"amount\": -1000.00}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
@@ -32,9 +34,26 @@ public class ApplyWithDraw {
                 Arguments.of(
                         "Amount is null - Bad Request",
                         new UserCase(
+                                1L,
                                 "{\"amount\": null}",
                                 "",
                                 HttpStatus.BAD_REQUEST)
+                ),
+                Arguments.of(
+                        "Account not found - Not Found",
+                        new UserCase(
+                                2L,
+                                "{\"amount\": 12.00}",
+                                "",
+                                HttpStatus.NOT_FOUND)
+                ),
+                Arguments.of(
+                        "Amount above balance - Unprocessable Entity",
+                        new UserCase(
+                                1L,
+                                "{\"amount\": 100000.00}",
+                                "",
+                                HttpStatus.UNPROCESSABLE_ENTITY)
                 )
 
                 /*
@@ -46,6 +65,7 @@ public class ApplyWithDraw {
     @AllArgsConstructor
     @Getter
     public static class UserCase {
+        private Long queryAccountId;
         private String request;
         private String response;
         private HttpStatus httpStatus;

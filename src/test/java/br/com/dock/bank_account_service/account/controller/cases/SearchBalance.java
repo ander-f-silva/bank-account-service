@@ -15,12 +15,16 @@ public class SearchBalance {
                         "Search performed successfully - OK",
                         new UserCase(
                                 "{\"amount\":1000.0}",
+                                1L,
                                 HttpStatus.OK)
+                ),
+                Arguments.of(
+                        "Account not found - Not found",
+                        new UserCase(
+                                "",
+                                2000L,
+                                HttpStatus.NOT_FOUND)
                 )
-
-                /*
-                    TODO: Fazer a pesquisa de usuário não encontrado -> Lembrar que usuário tem que estar ativo
-                 */
         );
     }
 
@@ -28,6 +32,7 @@ public class SearchBalance {
     @Getter
     public static class UserCase {
         private String response;
+        private Long paramAccountId;
         private HttpStatus httpStatus;
     }
 }
