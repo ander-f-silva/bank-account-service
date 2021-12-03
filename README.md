@@ -36,6 +36,9 @@ Abaixo os links importantes para explicar o uso e conversões dos pacotes que ap
 - Modelo de packages [http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The package-by-feature style still honors the idea of,t seem necessary or desirable](http://www.javapractices.com/topic/TopicAction.do?Id=205#:~:text=The%20package%2Dby%2Dfeature%20style%20still%20honors%20the%20idea%20of,t%20seem%20necessary%20or%20desirable).
 - Outras fontes [https://phauer.com/2020/package-by-feature/](https://phauer.com/2020/package-by-feature/)
 
+**Nota**: Um ponto importante é sobre a implementação dos teste, como eu fiz um desenvolvimento que começou na camada de api, fiz os teste de integrações que cobre vários cenários da aplicação e como
+muitas operações se tratavam de manipular dados da base me foquei neles no teste, porém pretendo no futuro implementar os teste de unidade, principalmente para operações de saque e deposito.
+
 ## Tecnologias utilizadas
 
 * Linguagem Java - Versão 11
