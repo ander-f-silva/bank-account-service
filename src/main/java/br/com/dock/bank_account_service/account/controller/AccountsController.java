@@ -6,6 +6,7 @@ import br.com.dock.bank_account_service.account.dto.AccountAtiveStatus;
 import br.com.dock.bank_account_service.account.dto.AccountStatement;
 import br.com.dock.bank_account_service.account.service.BlockAccount;
 import br.com.dock.bank_account_service.account.service.CreateAccount;
+import br.com.dock.bank_account_service.account.service.GetAccountStatement;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.Arrays;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/accounts")
@@ -27,6 +28,8 @@ class AccountsController {
     private final CreateAccount createAccount;
 
     private final BlockAccount blockAccount;
+
+    private final GetAccountStatement getAccountStatement;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -50,14 +53,11 @@ class AccountsController {
     }
 
     @GetMapping("/{accountId}/transactions")
-    ResponseEntity<AccountStatement> searchAccountStatement(@PathVariable Long accountId) {
-        return ResponseEntity.ok(
-                new AccountStatement(
-                        Arrays.asList(
-                                new AccountStatement.Transaction(1L, 100.0, AccountStatement.EventType.DEPOSIT, LocalDate.of(2021, 12, 1)),
-                                new AccountStatement.Transaction(2L, 50.0, AccountStatement.EventType.WITHDRAW, LocalDate.of(2021, 12, 1))
-                        )
-                )
-        );
+    ResponseEntity<AccountStatement> searchAccountStatement(@RequestParam(value = "page", defaultValue = "1") @Valid @Positive @Max(100) Integer page, @RequestParam(value = "size", defaultValue = "30") @Valid @Positive @Max(100) Integer size, @PathVariable Long accountId) {
+        var accountStatement = getAccountStatement.findByAccountId(accountId, page, size);
+
+        logger.info("[event: Get Account Statement] [param path: (accountId:{})] [response: {}]  Get Account Statement with success", accountId, accountStatement);
+
+        return ResponseEntity.ok(accountStatement);
     }
 }
